@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine’s 💖</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffb3c6, #ffe5ec);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 16px;
+}
+
+/* LOCK SCREEN */
+.lock-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #ff758f, #ffb3c6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 10;
+  text-align: center;
+}
+
+.tap {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* CARD */
+.card {
+  width: 100%;
+  max-width: 360px;
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  display: none;
+  position: relative;
+}
+
+/* FLOWER GAME */
+.game {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.flower {
+  background: #ff4d6d;
+  color: white;
+  padding: 18px 10px;
+  border-radius: 18px;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.flower.opened {
+  background: #fff0f5;
+  color: #ff4d6d;
+  font-size: 0.9rem;
+  cursor: default;
+}
+
+/* ROSE SCREEN */
+.rose-screen {
+  display: none;
+  margin-top: 15px;
+}
+
+.rose-img {
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.next-btn {
+  margin-top: 12px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+}
+
+/* LETTER SCREEN */
+.letter-screen {
+  display: none;
+  margin-top: 15px;
+}
+
+.paper {
+  max-height: 220px;
+  background: #fff0f5;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.5;
+  overflow-y: auto;
+  text-align: left;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.back-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div class="lock-screen" onclick="unlock()">
+  <h1>For You 🩷</h1>
+  <p>A small Valentine surprise</p>
+  <div class="tap">Tap to Unlock 💌</div>
+</div>
+
+<!-- CARD -->
+<div class="card" id="card">
+  <h2>Happy Valentine’s 🌹</h2>
+  <p>Collect the flowers first 💐</p>
+
+  <!-- FLOWERS -->
+  <div class="game" id="game">
+    <div class="flower" data-emoji="🌷">🌷</div>
+    <div class="flower" data-emoji="🌹">🌹</div>
+    <div class="flower" data-emoji="🌸">🌸</div>
+    <div class="flower" data-emoji="💐">💐</div>
+  </div>
+
+  <!-- ROSE IMAGE -->
+  <div class="rose-screen" id="roseScreen">
+    <img src="roses.jpg" alt="Roses" class="rose-img">
+    <button class="next-btn" onclick="showLetter()">Next 💌</button>
+  </div>
+
+  <!-- LETTER -->
+  <div class="letter-screen" id="letterScreen">
+    <div class="paper" id="letter"></div>
+    <button class="back-btn" onclick="backToFlowers()">← Back</button>
+  </div>
+
+</div>
+
+<audio id="music" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const fullMessage = `Happy Valentine’s Day.
+I’ve been thinking about whether to write this, and I realized that even if our talking stage ended, the feelings I had didn’t just disappear. Life and schedules pulled us in different directions, and I understand that. Still, I didn’t want this day to pass without letting you know what you meant to me.
+What we shared—no matter how brief—was genuine. The conversations, the laughs, the quiet moments where it felt easy to talk to you… those stayed with me. You reminded me how nice it is to feel connected to someone, even in the middle of busy days and long weeks.
+I don’t write this with expectations or pressure. I just wanted to be honest. I care about you, and a part of me always will. And while I respect where we are now, I can’t deny that I still quietly hope that maybe—at a better time, when things are lighter—our paths might cross again.
+And if they don’t, I’m still grateful for what we had.
+I hope life has been kind to you lately. I hope you’re happy, healthy, and chasing the things that matter to you.
+This Valentine’s Day, I’m sending you nothing but warmth and good thoughts.
+
+— fhenie`;
+
+function unlock() {
+  document.querySelector(".lock-screen").style.display = "none";
+  document.getElementById("card").style.display = "block";
+  document.getElementById("music").play();
+}
+
+const compliments = [
+  "You brighten every room 🌷",
+  "You are deeply appreciated 🌹",
+  "You make life more beautiful 🌸",
+  "You are truly special 💐"
+];
+
+const flowers = document.querySelectorAll(".flower");
+let picked = 0;
+
+flowers.forEach((flower, i) => {
+  flower.addEventListener("click", () => {
+    if (flower.classList.contains("opened")) return;
+
+    flower.classList.add("opened");
+    flower.textContent = compliments[i];
+    picked++;
+
+    if (picked === flowers.length) {
+      document.getElementById("game").style.display = "none";
+      document.getElementById("roseScreen").style.display = "block";
+    }
+  });
+});
+
+function showLetter() {
+  document.getElementById("roseScreen").style.display = "none";
+  document.getElementById("letterScreen").style.display = "block";
+  typeWriter(fullMessage, document.getElementById("letter"));
+}
+
+function backToFlowers() {
+  document.getElementById("letterScreen").style.display = "none";
+  document.getElementById("game").style.display = "grid";
+  document.getElementById("letter").innerHTML = "";
+  picked = 0;
+
+  flowers.forEach(f => {
+    f.classList.remove("opened");
+    f.textContent = f.dataset.emoji;
+  });
+}
+
+function typeWriter(text, element, i = 0) {
+  element.innerHTML = "";
+  function typing() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i) === "\n" ? "<br><br>" : text.charAt(i);
+      i++;
+      setTimeout(typing, 20);
+    }
+  }
+  typing();
+}
+</script>
+
+</body>
+</html>
